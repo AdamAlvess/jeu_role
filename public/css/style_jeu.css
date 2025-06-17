@@ -84,3 +84,20 @@ main {
 #logoutBtn:hover {
   background: darkred;
 }
+
+.dice-button {
+  margin-top: 1.5rem;
+  background-color: #00ffcc;
+  color: #0f0f1a;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+}
+
+.dice-button:hover {
+  background-color: #00e6b8;
+}

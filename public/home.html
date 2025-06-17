@@ -10,12 +10,6 @@
   <div class="home-container">
 
     <h1>Bienvenue dans ton royaume <span id="firstname"></span></h1>
-    <div id="userInfo">
-      <p><strong>Prénom :</strong> <span id="firstname"></span></p>
-      <p><strong>Nom :</strong> <span id="lastname"></span></p>
-      <p><strong>Email :</strong> <span id="email"></span></p>
-      <p><strong>Date d'inscription :</strong> <span id="dateInscription"></span></p>
-    </div>
 
     <div class="characters" id="charactersContainer">
       <!-- Les cartes de personnages mis dynamiquement -->
@@ -28,7 +22,6 @@
     <div class="modal-content">
       <span class="close" id="closeModal">&times;</span>
       <h2>Informations utilisateur</h2>
-      <p><strong>Prénom :</strong> <span id="firstname"></span></p>
       <p><strong>Nom :</strong> <span id="lastname"></span></p>
       <p><strong>Email :</strong> <span id="email"></span></p>
       <p><strong>Date d'inscription :</strong> <span id="dateInscription"></span></p>
@@ -131,7 +124,9 @@
       sessionStorage.setItem("selectedPersoId", id);
       window.location.href = "jeu.html";
     }
-
+    document.getElementById("diceBtn").addEventListener("click", () => {
+      window.open("dice.html", "_blank", "width=400,height=400");
+    });
     loadUserInfo(pseudo);
   </script>
 </body>
