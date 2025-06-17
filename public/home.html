@@ -46,6 +46,7 @@
     const pseudo = sessionStorage.getItem("pseudo");
 
     document.getElementById("createCharacterBtn").addEventListener("click", () => {
+      sessionStorage.removeItem("selectedPersoId");
       window.location.href = "create_character.html";
     });
 
