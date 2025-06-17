@@ -56,8 +56,8 @@ h1 {
 .characters {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   gap: 1rem;
-  justify-content: center;
   margin-top: 1rem;
   margin-bottom: 1.5rem;
 }
@@ -66,12 +66,12 @@ h1 {
   background-color: #0f3460;
   padding: 1rem;
   border-radius: 12px;
-  width: 45%;
   min-width: 140px;
   box-shadow: 0 0 12px rgba(0, 255, 204, 0.1);
   border: 2px solid #00ffcc;
   text-align: center;
   transition: transform 0.2s ease;
+  width: calc(33% - 1rem);
 }
 
 .character-card:hover {
@@ -125,3 +125,55 @@ h1 {
 .create-btn:hover {
   background-color: #00e6b8;
 }
+
+.modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+    }
+
+    .modal-content {
+      background-color: #1d2a52;
+      margin: 10% auto;
+      padding: 2rem;
+      border: 2px solid #00ffcc;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      color: white;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: white;
+    }
+
+    .modal-content p {
+      margin: 0.5rem 0;
+    }
+
+    @media screen and (max-width: 768px) {
+      .character-card {
+        width: calc(50% - 1rem); /* 2 par ligne sur petit écran */
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      .character-card {
+        width: 100%; /* 1 par ligne si trop petit */
+      }
+    }

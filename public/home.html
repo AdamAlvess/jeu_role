@@ -6,11 +6,10 @@
   <link rel="stylesheet" href="/css/style_home.css" />
 </head>
 <body>
+  <button class="profil-btn" id="openProfileBtn">Profil</button>
   <div class="home-container">
 
-    <button class="profil-btn">PROFIL</button>
-
-    <h1>Bienvenue sur ton espace perso</h1>
+    <h1>Bienvenue dans ton royaume <span id="firstname"></span></h1>
     <div id="userInfo">
       <p><strong>Prénom :</strong> <span id="firstname"></span></p>
       <p><strong>Nom :</strong> <span id="lastname"></span></p>
@@ -23,6 +22,17 @@
     </div>
 
     <button id="createCharacterBtn" class="create-btn">Créer nouveau personnage</button>
+    
+  </div>
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Informations utilisateur</h2>
+      <p><strong>Prénom :</strong> <span id="firstname"></span></p>
+      <p><strong>Nom :</strong> <span id="lastname"></span></p>
+      <p><strong>Email :</strong> <span id="email"></span></p>
+      <p><strong>Date d'inscription :</strong> <span id="dateInscription"></span></p>
+    </div>
   </div>
 
   <!-- Firebase SDK -->
@@ -49,6 +59,24 @@
       sessionStorage.removeItem("selectedPersoId");
       window.location.href = "create_character.html";
     });
+
+    const modal = document.getElementById("profileModal");
+    const openBtn = document.getElementById("openProfileBtn");
+    const closeBtn = document.getElementById("closeModal");
+
+    openBtn.onclick = () => {
+      modal.style.display = "block";
+    };
+
+    closeBtn.onclick = () => {
+      modal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
 
     async function loadUserInfo(pseudo) {
       if (!pseudo) {
@@ -85,7 +113,7 @@
 
     function displayCharacters(personnages) {
       const container = document.getElementById("charactersContainer");
-      container.innerHTML = ""; // reset
+      container.innerHTML = "";
 
       Object.entries(personnages).forEach(([key, perso], index) => {
         const card = document.createElement("div");
