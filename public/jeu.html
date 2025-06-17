@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Jeu - Personnage</title>
+  <link rel="stylesheet" href="./css/style_jeu.css">
+</head>
+<body>
+  <header>
+    <button id="menuBtn">Menu</button>
+    <div id="profileBtn">Profil</div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2 id="charName">Nom : </h2>
+      <p id="charRace">Race : </p>
+      <p id="charStats"></p>
+    </div>
+  </main>
+
+  <div id="profilePopup" class="hidden">
+    <div class="profile-content">
+      <h3>Profil du personnage</h3>
+      <p id="profileDetails"></p>
+      <button id="logoutBtn">Déconnexion</button>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
+      authDomain: "jeurole-16332.firebaseapp.com",
+      projectId: "jeurole-16332",
+      storageBucket: "jeurole-16332.appspot.com",
+      messagingSenderId: "465433430644",
+      appId: "1:465433430644:web:6d242f91e2435632fd9f21",
+      databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const pseudo = sessionStorage.getItem("pseudo");
+    const persoId = sessionStorage.getItem("selectedPersoId");
+
+    if (!pseudo) {
+      alert("Pseudo manquant. Redirection...");
+      window.location.href = "home.html";
+    }
+
+    function afficherFiche(perso, id) {
+      const stats = [
+        `Force : ${perso.force || "?"}`,
+        `Agilité : ${perso.agilite || "?"}`,
+        `Intelligence : ${perso.intelligence || "?"}`,
+        `Constitution : ${perso.constitution || "?"}`,
+        `Charisme : ${perso.charisme || "?"}`,
+        `Perception : ${perso.perception || "?"}`,
+        `Dextérité : ${perso.dexterite || "?"}`
+      ];
+
+      document.getElementById("charName").textContent = "Nom : " + (perso.nom || id || "Inconnu");
+      document.getElementById("charRace").textContent = "Race : " + (perso.race || "Inconnue");
+      document.getElementById("charStats").innerHTML = stats.join("<br>");
+      document.getElementById("profileDetails").innerHTML = `
+        Nom : ${perso.nom || "?"}<br>
+        Race : ${perso.race || "?"}<br>
+        ${stats.join("<br>")}
+      `;
+    }
+
+    function getStat(name) {
+      const val = localStorage.getItem(name);
+      const num = parseInt(val);
+      if (isNaN(num)) {
+        alert(`Erreur : la statistique "${name}" est manquante ou invalide.`);
+        window.location.href = "home.html";
+      }
+      return num;
+    }
+
+    if (persoId) {
+      // Charger le personnage existant depuis Firebase
+      db.ref(`user/${pseudo}/personnages/${persoId}`).once("value")
+        .then(snapshot => {
+          if (snapshot.exists()) {
+            const perso = snapshot.val();
+            afficherFiche(perso, persoId);
+          } else {
+            // ID invalide ou supprimé => on crée un nouveau perso
+            sessionStorage.removeItem("selectedPersoId");
+            location.reload();
+          }
+        })
+        .catch(err => {
+          console.error("Erreur de lecture Firebase :", err);
+          alert("Impossible de charger le personnage.");
+        });
+
+    } else {
+      // Aucun perso sélectionné → création
+      const nom = localStorage.getItem("characterName");
+      const race = localStorage.getItem("characterRace");
+
+      if (!nom || !race) {
+        alert("Nom ou race manquant !");
+        window.location.href = "home.html";
+      }
+
+      const nouveauPerso = {
+        nom,
+        race,
+        force: getStat("characterForce"),
+        agilite: getStat("characterAgility"),
+        intelligence: getStat("characterIntelligence"),
+        constitution: getStat("characterConstitution"),
+        charisme: getStat("characterCharisme"),
+        perception: getStat("characterPerception"),
+        dexterite: getStat("characterDexterite")
+      };
+
+      const newRef = db.ref(`user/${pseudo}/personnages`).push();
+      const newId = newRef.key;
+
+      newRef.set(nouveauPerso)
+        .then(() => {
+          sessionStorage.setItem("selectedPersoId", newId);
+          afficherFiche(nouveauPerso, newId);
+        })
+        .catch(err => {
+          console.error("Erreur création personnage :", err);
+          alert("Échec de la sauvegarde du personnage.");
+        });
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.href = "login.html";
+    });
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      localStorage.clear();
+      window.location.href = "home.html";
+    });
+
+    document.getElementById("profileBtn").addEventListener("click", () => {
+      document.getElementById("profilePopup").classList.toggle("hidden");
+    });
+  </script>
+</body>
+</html>

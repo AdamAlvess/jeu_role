@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accueil</title>
+  <link rel="stylesheet" href="/css/style_home.css" />
+</head>
+<body>
+  <div class="home-container">
+
+    <button class="profil-btn">PROFIL</button>
+
+    <h1>Bienvenue sur ton espace perso</h1>
+    <div id="userInfo">
+      <p><strong>Prénom :</strong> <span id="firstname"></span></p>
+      <p><strong>Nom :</strong> <span id="lastname"></span></p>
+      <p><strong>Email :</strong> <span id="email"></span></p>
+      <p><strong>Date d'inscription :</strong> <span id="dateInscription"></span></p>
+    </div>
+
+    <div class="characters" id="charactersContainer">
+      <!-- Les cartes de personnages mis dynamiquement -->
+    </div>
+
+    <button id="createCharacterBtn" class="create-btn">Créer nouveau personnage</button>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
+      authDomain: "jeurole-16332.firebaseapp.com",
+      projectId: "jeurole-16332",
+      storageBucket: "jeurole-16332.appspot.com",
+      messagingSenderId: "465433430644",
+      appId: "1:465433430644:web:6d242f91e2435632fd9f21",
+      databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    
+    const pseudo = sessionStorage.getItem("pseudo");
+
+    document.getElementById("createCharacterBtn").addEventListener("click", () => {
+      window.location.href = "create_character.html";
+    });
+
+    async function loadUserInfo(pseudo) {
+      if (!pseudo) {
+        alert("Pas de pseudo trouvé, connecte-toi d'abord !");
+        return;
+      }
+
+      const userRef = db.ref(`user/${pseudo}`);
+      const snapshot = await userRef.once('value');
+
+      if (!snapshot.exists()) {
+        alert("Utilisateur non trouvé !");
+        return;
+      }
+
+      const userData = snapshot.val();
+
+      document.getElementById('firstname').textContent = userData.firstname || '-';
+      document.getElementById('lastname').textContent = userData.lastname || '-';
+      document.getElementById('email').textContent = userData.email || '-';
+      
+      if (userData.dateInscription) {
+        const date = new Date(userData.dateInscription);
+        document.getElementById('dateInscription').textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+      } else {
+        document.getElementById('dateInscription').textContent = '-';
+      }
+
+      // Charger les personnages
+      if (userData.personnages) {
+        displayCharacters(userData.personnages);
+      }
+    }
+
+    function displayCharacters(personnages) {
+      const container = document.getElementById("charactersContainer");
+      container.innerHTML = ""; // reset
+
+      Object.entries(personnages).slice(0, 2).forEach(([key, perso], index) => {
+        const card = document.createElement("div");
+        card.className = "character-card";
+        card.innerHTML = `
+          <h3>${perso.nom || 'Perso ' + (index + 1)}</h3>
+          <div class="character-image"></div>
+          <button onclick="selectCharacter('${key}')">Sélectionner</button>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function selectCharacter(id) {
+      sessionStorage.setItem("selectedPersoId", id);
+      window.location.href = "jeu.html";
+    }
+
+    loadUserInfo(pseudo);
+  </script>
+</body>
+</html>

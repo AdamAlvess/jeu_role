@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Connexion</title>
+  <link rel="stylesheet" href="/css/style_login.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h2>Connexion</h2>
+    <input id="pseudo" type="text" placeholder="Pseudo" />
+    <input id="password" type="password" placeholder="Mot de passe" />
+
+    <button id="loginBtn">Se connecter</button>
+    <p>Pas encore de compte ? <a href="/register.html">Inscription</a></p>
+  </div>
+
+  <!-- Firebase compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
+        authDomain: "jeurole-16332.firebaseapp.com",
+        projectId: "jeurole-16332",
+        storageBucket: "jeurole-16332.appspot.com",
+        messagingSenderId: "465433430644",
+        appId: "1:465433430644:web:6d242f91e2435632fd9f21",
+        databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    </script>
+
+
+  <script src="/js/login.js"></script>
+</body>
+</html>

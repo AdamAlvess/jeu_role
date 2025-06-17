@@ -1,0 +1,127 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0f0f1a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.home-container {
+  width: 95%;
+  max-width: 700px;
+  background-color: #1d2a52;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.15);
+  border: 2px solid #00ffcc;
+  position: relative;
+  text-align: center;
+}
+
+h1 {
+  color: #00ffcc;
+  margin-bottom: 1.5rem;
+}
+
+.profil-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #0f3460;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0, 255, 204, 0.2);
+}
+
+#userInfo {
+  text-align: left;
+  background-color: #16213e;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.1);
+  margin-bottom: 2rem;
+}
+
+#userInfo p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.characters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.character-card {
+  background-color: #0f3460;
+  padding: 1rem;
+  border-radius: 12px;
+  width: 45%;
+  min-width: 140px;
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.1);
+  border: 2px solid #00ffcc;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.character-card:hover {
+  transform: scale(1.05);
+}
+
+.character-card h3 {
+  margin-top: 0;
+  color: #00ffcc;
+  font-size: 1.1rem;
+}
+
+.character-image {
+  background-color: #ccc;
+  height: 100px;
+  margin: 0.5rem 0;
+  border-radius: 10px;
+  background-image: url('/img/default_character.png');
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.character-card button {
+  background-color: #00ffcc;
+  color: #0f0f1a;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.character-card button:hover {
+  background-color: #00e6b8;
+}
+
+.create-btn {
+  margin-top: 1rem;
+  background-color: #00ffcc;
+  color: #0f0f1a;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+}
+
+.create-btn:hover {
+  background-color: #00e6b8;
+}

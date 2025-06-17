@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tirage de la Constitution</title>
+  <link rel="stylesheet" href="./css/style_tirage.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Tirage de la Constitution</h1>
+    <p id="infoRace"></p>
+
+    <div class="roulette-wrapper">
+      <div class="roulette" id="roulette"></div>
+      <div class="selector"></div>
+    </div>
+
+    <button id="startButton">Lancer</button>
+    <button id="nextButton" style="display:none;">Suivant</button>
+
+    <div class="stat-result" id="result" style="display:none;">
+      Constitution tirée : <span id="constitutionValue"></span>/20
+    </div>
+  </div>
+
+  <script type="module">
+    import { buildConstitutionRouletteList } from './js/constitution.js';
+
+    const race = localStorage.getItem("characterRace");
+    document.getElementById("infoRace").textContent = `Race : ${race}`;
+
+    const roulette = document.getElementById('roulette');
+    const startButton = document.getElementById('startButton');
+    const nextButton = document.getElementById('nextButton');
+    const constitutionValueText = document.getElementById('constitutionValue');
+    const result = document.getElementById('result');
+
+    function displayRouletteItems(list) {
+      roulette.innerHTML = "";
+      list.forEach(value => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.textContent = value;
+        roulette.appendChild(div);
+      });
+    }
+
+    function animateToCenterByValue(valueToCenter) {
+      const items = document.querySelectorAll('.item');
+      let targetItem = null;
+
+      items.forEach(item => {
+        if (item.textContent === valueToCenter.toString() && !targetItem) {
+          targetItem = item;
+        }
+      });
+
+      if (!targetItem) {
+        console.warn("❌ Élément à centrer non trouvé !");
+        return;
+      }
+
+      const wrapper = document.querySelector(".roulette-wrapper");
+      const wrapperCenter = wrapper.offsetWidth / 2;
+
+      const itemBox = targetItem.getBoundingClientRect();
+      const rouletteBox = roulette.getBoundingClientRect();
+      const itemCenter = itemBox.left + itemBox.width / 2;
+      const currentOffset = itemCenter - rouletteBox.left;
+
+      const offsetToCenter = currentOffset - wrapperCenter;
+
+      let position = 0;
+      let speed = 50;
+      const targetOffset = offsetToCenter;
+
+      const interval = setInterval(() => {
+        position += speed;
+        if (speed > 2) speed *= 0.97;
+
+        roulette.style.transform = `translateX(${-position}px)`;
+
+        if (position >= targetOffset) {
+          clearInterval(interval);
+          roulette.style.transform = `translateX(${-targetOffset}px)`;
+          nextButton.style.display = "inline-block";
+        }
+      }, 16);
+    }
+
+    startButton.addEventListener("click", () => {
+      startButton.disabled = true;
+      nextButton.style.display = "none";
+      result.style.display = "none";
+
+      const { list, drawnValue } = buildConstitutionRouletteList(race);
+      displayRouletteItems(list);
+      animateToCenterByValue(drawnValue);
+
+      constitutionValueText.textContent = drawnValue;
+      localStorage.setItem("characterConstitution", drawnValue);
+    });
+
+    nextButton.addEventListener("click", () => {
+      result.style.display = "block";
+      startButton.disabled = false;
+      window.location.href = 'dexterite.html';
+    });
+  </script>
+</body>
+</html>
