@@ -29,7 +29,7 @@ function loadCharacters() {
     displayFilteredCharacters(personnages);
     
     document.getElementById("applyFilters").addEventListener("click", () => {
-      displayFilteredCharacters(personnages);
+  displayFilteredCharacters(personnages);
     });
   });
 }
@@ -38,19 +38,19 @@ function displayFilteredCharacters(personnages) {
   const container = document.getElementById("exploreCharacters");
   container.innerHTML = "";
 
-  const selectedClass = document.getElementById("classFilter").value;
+  const selectedRace = document.getElementById("raceFilter").value;
   const minLevel = parseInt(document.getElementById("levelFilter").value) || 0;
 
   Object.entries(personnages).forEach(([key, perso]) => {
-    const classe = perso.classe || "";
+    const race = perso.race || "";
     const niveau = parseInt(perso.niveau) || 0;
 
-    if ((selectedClass === "" || classe === selectedClass) && niveau >= minLevel) {
+    if ((selectedRace === "" || race === selectedRace) && niveau >= minLevel) {
       const card = document.createElement("div");
       card.className = "character-card";
       card.innerHTML = `
         <h3>${perso.nom || 'Sans nom'}</h3>
-        <p><strong>Classe :</strong> ${classe}</p>
+        <p><strong>Race :</strong> ${race}</p>
         <p><strong>Niveau :</strong> ${niveau}</p>
         <div class="character-image"></div>
       `;
