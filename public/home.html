@@ -4,18 +4,33 @@
   <meta charset="UTF-8" />
   <title>Accueil</title>
   <link rel="stylesheet" href="/css/style_home.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-  <button class="profil-btn" id="openProfileBtn">Profil</button>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="#">ACCUEIL</a></li>
+      <li><a href="#">À PROPOS</a></li>
+      <li><a href="#">EXPLORER</a></li>
+      <li><a href="#">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-section">
+    <h1>ROLE-PLAYING GAME</h1>
+    <p>Embarque dans une aventure épique dans un monde de fantasy et de danger</p>
+    <button class="start-btn">COMMENCER L'AVENTURE</button>
+  </div>
+
   <div class="home-container">
-
-    <h1>Bienvenue dans ton royaume <span id="firstname"></span></h1>
-
-    <div class="characters" id="charactersContainer">
-      <!-- Les cartes de personnages mis dynamiquement -->
-    </div>
-
+    <h2>Bienvenue dans ton royaume <span id="firstname"></span></h2>
+    <div class="characters" id="charactersContainer"></div>
     <button id="createCharacterBtn" class="create-btn">Créer nouveau personnage</button>
+  </div>
+
+  <div class="characters" id="charactersContainer">
+    <!-- Les cartes de personnages mis dynamiquement -->
+  </div>
     
   </div>
   <div id="profileModal" class="modal">
