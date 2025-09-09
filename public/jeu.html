@@ -139,13 +139,6 @@
           alert("Échec de la sauvegarde du personnage.");
         });
     }
-
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      sessionStorage.clear();
-      localStorage.clear();
-      window.location.href = "login.html";
-    });
-
     window.onload = () => {
       const rollBtn = document.getElementById("rollBtn");
       const dice = document.getElementById("diceImage");
