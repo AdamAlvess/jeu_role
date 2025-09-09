@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Explorer</title>
+  <link rel="stylesheet" href="/css/style_explore.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="/home.html">ACCUEIL</a></li>
+      <li><a href="#">À PROPOS</a></li>
+      <li><a href="/explore.html">EXPLORER</a></li>
+    </ul>
+  </nav>
+
+  <div class="explore-container">
+        <div class="filters">
+    <select id="classFilter">
+        <option value="">Toutes les classes</option>
+        <option value="Guerrier">Guerrier</option>
+        <option value="Mage">Mage</option>
+        <option value="Voleur">Voleur</option>
+        <!-- Ajoute d'autres classes ici -->
+    </select>
+
+    <input type="number" id="levelFilter" placeholder="Niveau minimum" min="1" />
+
+    <button id="applyFilters">Filtrer</button>
+    </div>
+    <h1>Personnages créés</h1>
+    <div class="characters" id="exploreCharacters"></div>
+    
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <script src="/js/explore.js"></script>
+</body>
+</html>

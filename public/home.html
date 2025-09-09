@@ -9,10 +9,9 @@
 <body>
   <nav class="main-nav">
     <ul>
-      <li><a href="#">ACCUEIL</a></li>
+      <li><a href="/home.html">ACCUEIL</a></li>
       <li><a href="#">À PROPOS</a></li>
       <li><a href="#">EXPLORER</a></li>
-      <li><a href="#">CONTACT</a></li>
     </ul>
   </nav>
 
@@ -118,19 +117,20 @@
       const container = document.getElementById("charactersContainer");
       container.innerHTML = "";
 
-      Object.entries(personnages).forEach(([key, perso], index) => {
-        const card = document.createElement("div");
-        card.className = "character-card";
-        card.innerHTML = `
-          <h3>${perso.nom || 'Perso ' + (index + 1)}</h3>
-          <div class="character-image"></div>
-          <div class="button-group">
-            <button onclick="selectCharacter('${key}')">Sélectionner</button>
-            <img src="assets/delete.png" alt="Supprimer" class="delete-icon" onclick="deleteCharacter('${key}')" title="Supprimer le personnage" />
-          </div>
-        `;
-        container.appendChild(card);
-      });
+      const entries = Object.entries(personnages);
+      const [key, perso] = entries[entries.length - 1];
+
+      const card = document.createElement("div");
+      card.className = "character-card";
+      card.innerHTML = `
+        <h3>${perso.nom || 'Dernier personnage'}</h3>
+        <div class="character-image"></div>
+        <div class="button-group">
+          <button onclick="selectCharacter('${key}')">Sélectionner</button>
+          <img src="assets/delete.png" alt="Supprimer" class="delete-icon" onclick="deleteCharacter('${key}')" title="Supprimer le personnage" />
+        </div>
+      `;
+      container.appendChild(card);
     }
 
     function selectCharacter(id) {
