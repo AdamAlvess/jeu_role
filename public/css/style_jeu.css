@@ -145,15 +145,16 @@ body {
 }
 
 .dice-img {
-  width: 180px;
-  height: 180px;
+  width: 120px;
+  height: 120px;
   margin: auto;
   display: block;
   transition: transform 1.2s ease;
   transform-origin: center;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
   border-radius: 20px;
 }
+
 .rolling {
   transform: rotateY(720deg) scale(1.2);
 }

@@ -5,7 +5,7 @@
   <title>Jeu - Personnage</title>
   <link rel="icon" href="/assets/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="/assets/favicon.png" />
-  <link rel="stylesheet" href="/css/style_home.css" />
+  <link rel="stylesheet" href="/css/style_jeu.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -150,10 +150,6 @@
       window.location.href = "login.html";
     });
 
-    document.getElementById("profileBtn").addEventListener("click", () => {
-      document.getElementById("profilePopup").classList.toggle("hidden");
-    });
-
     document.getElementById("rollBtn").addEventListener("click", () => {
       const dice = document.getElementById("diceImage");
       const resultText = document.getElementById("diceResultText");
@@ -172,6 +168,25 @@
         resultText.classList.remove("hidden");
       }, 1200);
     });
+    window.onload = () => {
+      const rollBtn = document.getElementById("rollBtn");
+      const dice = document.getElementById("diceImage");
+      const resultText = document.getElementById("diceResultText");
+      const resultValue = document.getElementById("resultValue");
+
+      if (rollBtn && dice && resultText && resultValue) {
+        rollBtn.addEventListener("click", () => {
+          dice.classList.add("rolling");
+          const result = Math.floor(Math.random() * 20) + 1;
+
+          setTimeout(() => {
+            dice.classList.remove("rolling");
+            resultValue.textContent = result;
+            resultText.classList.remove("hidden");
+          }, 1200);
+        });
+      }
+    };
   </script>
 </body>
 </html>
