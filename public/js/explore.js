@@ -53,6 +53,9 @@ function displayFilteredCharacters(personnages) {
         <p><strong>Race :</strong> ${race}</p>
         <p><strong>Niveau :</strong> ${niveau}</p>
         <div class="character-image"></div>
+        <div class="button-group">
+          <button onclick="selectCharacter('${key}')">Sélectionner</button>
+        </div>
       `;
       container.appendChild(card);
     }
@@ -61,6 +64,11 @@ function displayFilteredCharacters(personnages) {
   if (container.innerHTML === "") {
     container.innerHTML = "<p>Aucun personnage ne correspond aux filtres.</p>";
   }
+}
+
+function selectCharacter(id) {
+  sessionStorage.setItem("selectedPersoId", id);
+  window.location.href = "jeu.html";
 }
 
 loadCharacters();

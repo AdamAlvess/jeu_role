@@ -110,3 +110,25 @@ body {
 .filters button:hover {
   background-color: #d34f48;
 }
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.character-card button {
+  background-color: #E5D3A8;
+  color: #10151E;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.character-card button:hover {
+  background-color: #e6c200;
+}
