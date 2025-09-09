@@ -82,11 +82,12 @@
 
       const card = document.createElement("div");
       card.className = "character-card centered-card";
+      // <button onclick="selectCharacter('${key}')">Sélectionner</button>
       card.innerHTML = `
         <h3>${perso.nom || 'Dernier personnage'}</h3>
         <div class="character-image"></div>
         <div class="button-group">
-          <button onclick="selectCharacter('${key}')">Sélectionner</button>
+          <img src="assets/selectionner.png" alt="Selectionner" class="selectionner-icon" onclick="selectCharacter('${key}')" title="Sélectionner le personnage" />
           <img src="assets/delete.png" alt="Supprimer" class="delete-icon" onclick="deleteCharacter('${key}')" title="Supprimer le personnage" />
         </div>
       `;

@@ -1,103 +1,191 @@
+/* === Base === */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #0f0f1a;
-  color: white;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  background-color: #10151E;
+  color: #f5f5f5;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #0f3460;
-  padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+/* === Navigation === */
+.main-nav {
+  background-color: #10151E;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #BC4841;
 }
 
-#menuBtn,
-#profileBtn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-main {
-  flex: 1;
+.main-nav ul {
+  list-style: none;
   display: flex;
   justify-content: center;
-  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
-.card {
-  background: #1d2a52;
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-  width: 300px;
+.main-nav a {
+  color: #E5D3A8;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: 'Cinzel', serif;
+  transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: #ff4c4c;
+}
+
+/* === Hero Section === */
+.hero-section {
   text-align: center;
-  border: 2px solid #00ffcc;
+  padding: 4rem 2rem;
+  background: linear-gradient(to bottom, #10151E, #0b0b0b);
+  border-bottom: 2px solid #BC4841;
 }
 
-.card h2 {
-  margin-top: 0;
-  color: #00ffcc;
+.hero-section h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 2.8rem;
+  color: #E5D3A8;
+  margin-bottom: 1rem;
 }
 
-.stat {
-  margin: 10px 0;
-  font-size: 1.1rem;
+.hero-section p {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 2rem;
 }
 
-#profilePopup {
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  background: #1d2a52;
+/* === Layout principal === */
+.main-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
+  gap: 2rem;
+}
+
+/* === Section personnage === */
+.character-section {
+  background-color: #10151E;
+  border: 2px solid #E5D3A8;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.character-section h2 {
+  font-family: 'Cinzel', serif;
+  color: #E5D3A8;
+  margin-bottom: 1rem;
+}
+
+.character-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* === Boutons === */
+.create-btn,
+.profil-btn {
+  background-color: #BC4841;
   color: white;
-  padding: 20px;
-  border-radius: 10px;
-  border: 2px solid #00ffcc;
-  box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
-  z-index: 10;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
 }
 
+.create-btn:hover,
+.profil-btn:hover {
+  background-color: #d34f48;
+}
+
+/* === Popup Profil === */
+.sidebar {
+  flex: 1;
+  background-color: #0f0f1a;
+  border: 2px solid #BC4841;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(188, 72, 65, 0.3);
+}
+
+.sidebar h2 {
+  font-family: 'Cinzel', serif;
+  color: #E5D3A8;
+  margin-bottom: 1rem;
+}
+
+.sidebar p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* === Dice Result === */
+#diceResult {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #E5D3A8;
+}
+
+/* === Dé === */
+.dice-container {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.dice {
+  width: 120px;
+  height: 120px;
+  background: #E5D3A8;
+  color: #10151E;
+  font-size: 3rem;
+  font-weight: bold;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  transition: transform 1s ease;
+}
+
+.dice-result {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #E5D3A8;
+}
+
+/* === Hidden class === */
 .hidden {
   display: none;
 }
 
-#logoutBtn {
-  margin-top: 15px;
-  background: crimson;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+/* === Responsive === */
+@media screen and (max-width: 1024px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
-#logoutBtn:hover {
-  background: darkred;
-}
+@media screen and (max-width: 600px) {
+  .character-section {
+    padding: 1rem;
+  }
 
-.dice-button {
-  margin-top: 1.5rem;
-  background-color: #00ffcc;
-  color: #0f0f1a;
-  padding: 0.8rem 1.5rem;
-  font-size: 1.1rem;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
-}
-
-.dice-button:hover {
-  background-color: #00e6b8;
+  .create-btn,
+  .profil-btn {
+    width: 100%;
+  }
 }

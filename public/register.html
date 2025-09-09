@@ -4,40 +4,48 @@
   <meta charset="UTF-8" />
   <title>Inscription</title>
   <link rel="stylesheet" href="/css/style_register.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/favicon.png" />
 </head>
 <body>
-  <div class="form-container">
-    <h2>Créer un compte</h2>
-    <input id="firstname" type="text" placeholder="Prénom" />
-    <input id="lastname" type="text" placeholder="Nom" />
-    <input id="pseudo" type="text" placeholder="Pseudo" />
-    <input id="email" type="email" placeholder="Email" />
-    <input id="password" type="password" placeholder="Mot de passe" />
+  <nav class="main-nav">
+    <ul>
+      <li><a href="/home.html">ACCUEIL</a></li>
+      <li><a href="/propos.html">À PROPOS</a></li>
+      <li><a href="/explore.html">EXPLORER</a></li>
+    </ul>
+  </nav>
 
-    <button id="registerBtn">S'inscrire</button>
-    <p>Déjà un compte ? <a href="/">Connexion</a></p>
+  <div class="register-container">
+    <h1>Créer un compte</h1>
+    <div class="form-box">
+      <input id="firstname" type="text" placeholder="Prénom" />
+      <input id="lastname" type="text" placeholder="Nom" />
+      <input id="pseudo" type="text" placeholder="Pseudo" />
+      <input id="email" type="email" placeholder="Email" />
+      <input id="password" type="password" placeholder="Mot de passe" />
+      <button id="registerBtn">S'inscrire</button>
+      <p class="link-text">Déjà un compte ? <a href="/">Connexion</a></p>
+    </div>
   </div>
 
-  <!-- Firebase compat SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-
   <script>
     const firebaseConfig = {
-        apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
-        authDomain: "jeurole-16332.firebaseapp.com",
-        projectId: "jeurole-16332",
-        storageBucket: "jeurole-16332.appspot.com",
-        messagingSenderId: "465433430644",
-        appId: "1:465433430644:web:6d242f91e2435632fd9f21",
-        databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
+      apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
+      authDomain: "jeurole-16332.firebaseapp.com",
+      projectId: "jeurole-16332",
+      storageBucket: "jeurole-16332.appspot.com",
+      messagingSenderId: "465433430644",
+      appId: "1:465433430644:web:6d242f91e2435632fd9f21",
+      databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
     };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-    </script>
-
-
+  </script>
   <script src="/js/register.js"></script>
 </body>
 </html>

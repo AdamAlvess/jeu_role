@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Jeu - Personnage</title>
-  <link rel="stylesheet" href="./css/style_jeu.css">
+  <link rel="icon" href="/assets/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/css/style_home.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <button id="menuBtn">Menu</button>
-    <div id="profileBtn">Profil</div>
-  </header>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="/home.html">ACCUEIL</a></li>
+      <li><a href="/propos.html">À PROPOS</a></li>
+      <li><a href="/explore.html">EXPLORER</a></li>
+    </ul>
+  </nav>
 
-  <main>
-    <div class="card">
+  <div class="hero-section">
+    <h1>FICHE DU PERSONNAGE</h1>
+    <p>Voici ton héros, prêt à affronter les dangers du monde</p>
+  </div>
+
+  <div class="main-layout">
+    <section class="character-section">
       <h2 id="charName">Nom : </h2>
       <p id="charRace">Race : </p>
       <p id="charStats"></p>
-    </div>
-    <button id="diceBtn" class="dice-button">🎲 Lancer le dé</button>
-    <div id="diceResult" class="hidden">
-      <p>Résultat du dé : <span id="resultValue"></span></p>
-  </main>
 
-  <div id="profilePopup" class="hidden">
-    <div class="profile-content">
-      <h3>Profil du personnage</h3>
+      <div class="dice-container">
+        <div id="dice" class="dice">🎲</div>
+        <button id="rollBtn" class="create-btn">Lancer le dé</button>
+        <p id="diceResultText" class="dice-result hidden">Résultat : <span id="resultValue"></span></p>
+      </div>
+
+      <div id="diceResult" class="hidden">
+        <p>Résultat du dé : <span id="resultValue"></span></p>
+      </div>
+
+      <button id="profileBtn" class="profil-btn">Afficher le profil</button>
+    </section>
+
+    <div id="profilePopup" class="sidebar hidden">
+      <h2>Profil du personnage</h2>
       <p id="profileDetails"></p>
-      <button id="logoutBtn">Déconnexion</button>
+      <button id="logoutBtn" class="create-btn">Déconnexion</button>
     </div>
   </div>
 
@@ -88,14 +106,12 @@
     }
 
     if (persoId) {
-      // Charger le personnage existant depuis Firebase
       db.ref(`user/${pseudo}/personnages/${persoId}`).once("value")
         .then(snapshot => {
           if (snapshot.exists()) {
             const perso = snapshot.val();
             afficherFiche(perso, persoId);
           } else {
-            // ID invalide ou supprimé => on crée un nouveau perso
             sessionStorage.removeItem("selectedPersoId");
             location.reload();
           }
@@ -104,9 +120,7 @@
           console.error("Erreur de lecture Firebase :", err);
           alert("Impossible de charger le personnage.");
         });
-
     } else {
-      // Aucun perso sélectionné → création
       const nom = localStorage.getItem("characterName");
       const race = localStorage.getItem("characterRace");
 
@@ -146,18 +160,26 @@
       localStorage.clear();
       window.location.href = "login.html";
     });
-    document.getElementById("menuBtn").addEventListener("click", () => {
-      localStorage.clear();
-      window.location.href = "home.html";
-    });
 
     document.getElementById("profileBtn").addEventListener("click", () => {
       document.getElementById("profilePopup").classList.toggle("hidden");
     });
-    document.getElementById("diceBtn").addEventListener("click", () => {
-        window.open("dice.html", "_blank", "width=400,height=400");
-    });
 
+    document.getElementById("rollBtn").addEventListener("click", () => {
+      const dice = document.getElementById("dice");
+      const resultText = document.getElementById("diceResultText");
+      const resultValue = document.getElementById("resultValue");
+
+      const result = Math.floor(Math.random() * 20) + 1;
+      dice.style.transform = `rotate(${Math.random() * 720 + 360}deg) scale(1.1)`;
+
+      setTimeout(() => {
+        dice.textContent = result;
+        dice.style.transform = "rotate(0deg) scale(1)";
+        resultValue.textContent = result;
+        resultText.classList.remove("hidden");
+      }, 1000);
+    });
   </script>
 </body>
 </html>
