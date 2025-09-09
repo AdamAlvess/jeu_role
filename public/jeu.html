@@ -29,23 +29,12 @@
       <p id="charStats"></p>
 
       <div class="dice-container">
-        <div id="dice" class="dice">🎲</div>
+        <img id="diceImage" src="/assets/d20.png" alt="Dé 20 faces" class="dice-img" />
         <button id="rollBtn" class="create-btn">Lancer le dé</button>
-        <p id="diceResultText" class="dice-result hidden">Résultat : <span id="resultValue"></span></p>
+        <p id="diceResultText" class="dice-result hidden">Résultat du dé : <span id="resultValue"></span></p>
       </div>
 
-      <div id="diceResult" class="hidden">
-        <p>Résultat du dé : <span id="resultValue"></span></p>
-      </div>
-
-      <button id="profileBtn" class="profil-btn">Afficher le profil</button>
     </section>
-
-    <div id="profilePopup" class="sidebar hidden">
-      <h2>Profil du personnage</h2>
-      <p id="profileDetails"></p>
-      <button id="logoutBtn" class="create-btn">Déconnexion</button>
-    </div>
   </div>
 
   <!-- Firebase SDKs -->
@@ -166,19 +155,22 @@
     });
 
     document.getElementById("rollBtn").addEventListener("click", () => {
-      const dice = document.getElementById("dice");
+      const dice = document.getElementById("diceImage");
       const resultText = document.getElementById("diceResultText");
       const resultValue = document.getElementById("resultValue");
 
-      const result = Math.floor(Math.random() * 20) + 1;
-      dice.style.transform = `rotate(${Math.random() * 720 + 360}deg) scale(1.1)`;
+      // Animation CSS
+      dice.classList.add("rolling");
 
+      // Génération du résultat
+      const result = Math.floor(Math.random() * 20) + 1;
+
+      // Affichage après animation
       setTimeout(() => {
-        dice.textContent = result;
-        dice.style.transform = "rotate(0deg) scale(1)";
+        dice.classList.remove("rolling");
         resultValue.textContent = result;
         resultText.classList.remove("hidden");
-      }, 1000);
+      }, 1200);
     });
   </script>
 </body>

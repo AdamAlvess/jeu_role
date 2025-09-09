@@ -144,22 +144,19 @@ body {
   text-align: center;
 }
 
-.dice {
-  width: 120px;
-  height: 120px;
-  background: #E5D3A8;
-  color: #10151E;
-  font-size: 3rem;
-  font-weight: bold;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.dice-img {
+  width: 180px;
+  height: 180px;
   margin: auto;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-  transition: transform 1s ease;
+  display: block;
+  transition: transform 1.2s ease;
+  transform-origin: center;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  border-radius: 20px;
 }
-
+.rolling {
+  transform: rotateY(720deg) scale(1.2);
+}
 .dice-result {
   margin-top: 1rem;
   font-size: 1.2rem;
