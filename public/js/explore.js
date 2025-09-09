@@ -54,8 +54,10 @@ function displayFilteredCharacters(personnages) {
         <p><strong>Niveau :</strong> ${niveau}</p>
         <div class="character-image"></div>
         <div class="button-group">
-          <button onclick="selectCharacter('${key}')">Sélectionner</button>
+          <img src="assets/selectionner.png" alt="Sélectionner" class="action-icon" onclick="selectCharacter('${key}')" title="Sélectionner le personnage" />
+          <img src="assets/delete.png" alt="Supprimer" class="action-icon" onclick="deleteCharacter('${key}')" title="Supprimer le personnage" />
         </div>
+
       `;
       container.appendChild(card);
     }

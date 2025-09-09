@@ -205,12 +205,18 @@ body {
   background-color: #e6c200;
 }
 
-.delete-icon {
-  width: 24px;
-  height: 24px;
+.action-icon {
+  width: 20px;
+  height: 20px;
   cursor: pointer;
+  transition: transform 0.2s ease;
+  filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.4));
 }
 
+.action-icon:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
+}
 
 /* === Responsive === */
 @media screen and (max-width: 1024px) {

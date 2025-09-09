@@ -87,8 +87,8 @@
         <h3>${perso.nom || 'Dernier personnage'}</h3>
         <div class="character-image"></div>
         <div class="button-group">
-          <img src="assets/selectionner.png" alt="Selectionner" class="selectionner-icon" onclick="selectCharacter('${key}')" title="Sélectionner le personnage" />
-          <img src="assets/delete.png" alt="Supprimer" class="delete-icon" onclick="deleteCharacter('${key}')" title="Supprimer le personnage" />
+          <img src="assets/selectionner.png" alt="Sélectionner" class="action-icon" onclick="selectCharacter('${key}')" title="Sélectionner le personnage" />
+          <img src="assets/delete.png" alt="Supprimer" class="action-icon" onclick="deleteCharacter('${key}')" title="Supprimer le personnage" />
         </div>
       `;
       container.appendChild(card);
