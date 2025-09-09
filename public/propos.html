@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>À propos</title>
+  <link rel="stylesheet" href="/css/style_propos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="/home.html">ACCUEIL</a></li>
+      <li><a href="/propos.html">À PROPOS</a></li>
+      <li><a href="/explore.html">EXPLORER</a></li>
+    </ul>
+  </nav>
+
+  <div class="propos-container">
+    <h1>Profil du joueur</h1>
+    <div class="user-info">
+      <p><strong>Prénom :</strong> <span id="firstname"></span></p>
+      <p><strong>Nom :</strong> <span id="lastname"></span></p>
+      <p><strong>Email :</strong> <span id="email"></span></p>
+      <p><strong>Date d'inscription :</strong> <span id="dateInscription"></span></p>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
+      authDomain: "jeurole-16332.firebaseapp.com",
+      projectId: "jeurole-16332",
+      storageBucket: "jeurole-16332.appspot.com",
+      messagingSenderId: "465433430644",
+      appId: "1:465433430644:web:6d242f91e2435632fd9f21",
+      databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const pseudo = sessionStorage.getItem("pseudo");
+
+    async function loadUserInfo(pseudo) {
+      if (!pseudo) {
+        alert("Pas de pseudo trouvé !");
+        return;
+      }
+
+      const userRef = db.ref(`user/${pseudo}`);
+      const snapshot = await userRef.once('value');
+
+      if (!snapshot.exists()) {
+        alert("Utilisateur non trouvé !");
+        return;
+      }
+
+      const userData = snapshot.val();
+      document.getElementById('firstname').textContent = userData.firstname || '-';
+      document.getElementById('lastname').textContent = userData.lastname || '-';
+      document.getElementById('email').textContent = userData.email || '-';
+
+      if (userData.dateInscription) {
+        const date = new Date(userData.dateInscription);
+        document.getElementById('dateInscription').textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+      } else {
+        document.getElementById('dateInscription').textContent = '-';
+      }
+    }
+
+    loadUserInfo(pseudo);
+  </script>
+</body>
+</html>

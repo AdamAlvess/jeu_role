@@ -55,28 +55,13 @@ body {
   margin-bottom: 2rem;
 }
 
-.start-btn {
-  background-color: #BC4841;
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.start-btn:hover {
-  background-color: rgb(196, 0, 0);
-}
-
 /* === Layout principal === */
+/* Centrage du layout */
 .main-layout {
   display: flex;
-  flex-direction: row;
-  gap: 2rem;
+  justify-content: center;
   padding: 2rem;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: auto;
 }
 
@@ -131,13 +116,25 @@ body {
 }
 
 /* === Section personnages === */
+
+
+/* Section personnage centrée */
 .character-section {
-  flex: 2;
   background-color: #10151E;
   border: 2px solid #E5D3A8;
   border-radius: 15px;
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Centrage de la carte */
+.centered-card {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 300px;
 }
 
 .character-section h2 {
@@ -214,46 +211,6 @@ body {
   cursor: pointer;
 }
 
-/* === Modal === */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 10;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.7);
-}
-
-.modal-content {
-  background-color: #10151E;
-  margin: 10% auto;
-  padding: 2rem;
-  border: 2px solid #E5D3A8;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 400px;
-  color: white;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-}
-
-.modal-content p {
-  margin: 0.5rem 0;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover {
-  color: white;
-}
 
 /* === Responsive === */
 @media screen and (max-width: 1024px) {
