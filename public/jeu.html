@@ -146,24 +146,6 @@
       window.location.href = "login.html";
     });
 
-    document.getElementById("rollBtn").addEventListener("click", () => {
-      const dice = document.getElementById("diceImage");
-      const resultText = document.getElementById("diceResultText");
-      const resultValue = document.getElementById("resultValue");
-
-      // Animation CSS
-      dice.classList.add("rolling");
-
-      // Génération du résultat
-      const result = Math.floor(Math.random() * 20) + 1;
-
-      // Affichage après animation
-      setTimeout(() => {
-        dice.classList.remove("rolling");
-        resultValue.textContent = result;
-        resultText.classList.remove("hidden");
-      }, 1200);
-    });
     window.onload = () => {
       const rollBtn = document.getElementById("rollBtn");
       const dice = document.getElementById("diceImage");
