@@ -22,17 +22,24 @@
     <button class="start-btn">COMMENCER L'AVENTURE</button>
   </div>
 
-  <div class="home-container">
-    <h2>Bienvenue dans ton royaume <span id="firstname"></span></h2>
-    <div class="characters" id="charactersContainer"></div>
-    <button id="createCharacterBtn" class="create-btn">Créer nouveau personnage</button>
+  <div class="main-layout">
+    <aside class="sidebar">
+      <button class="profil-btn" id="openProfileBtn">Profil</button>
+      <div class="user-info">
+        <h2>Bienvenue <span id="firstname"></span></h2>
+        <p><strong>Nom :</strong> <span id="lastname"></span></p>
+        <p><strong>Email :</strong> <span id="email"></span></p>
+        <p><strong>Inscription :</strong> <span id="dateInscription"></span></p>
+      </div>
+      <button id="createCharacterBtn" class="create-btn">Créer nouveau personnage</button>
+    </aside>
+
+    <section class="character-section">
+      <h2>Vos personnages</h2>
+      <div class="characters" id="charactersContainer"></div>
+    </section>
   </div>
 
-  <div class="characters" id="charactersContainer">
-    <!-- Les cartes de personnages mis dynamiquement -->
-  </div>
-    
-  </div>
   <div id="profileModal" class="modal">
     <div class="modal-content">
       <span class="close" id="closeModal">&times;</span>
@@ -43,7 +50,6 @@
     </div>
   </div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
@@ -60,7 +66,6 @@
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
-    
     const pseudo = sessionStorage.getItem("pseudo");
 
     document.getElementById("createCharacterBtn").addEventListener("click", () => {
@@ -72,18 +77,10 @@
     const openBtn = document.getElementById("openProfileBtn");
     const closeBtn = document.getElementById("closeModal");
 
-    openBtn.onclick = () => {
-      modal.style.display = "block";
-    };
-
-    closeBtn.onclick = () => {
-      modal.style.display = "none";
-    };
-
+    openBtn.onclick = () => { modal.style.display = "block"; };
+    closeBtn.onclick = () => { modal.style.display = "none"; };
     window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
+      if (event.target == modal) { modal.style.display = "none"; }
     };
 
     async function loadUserInfo(pseudo) {
@@ -101,11 +98,10 @@
       }
 
       const userData = snapshot.val();
-
       document.getElementById('firstname').textContent = userData.firstname || '-';
       document.getElementById('lastname').textContent = userData.lastname || '-';
       document.getElementById('email').textContent = userData.email || '-';
-      
+
       if (userData.dateInscription) {
         const date = new Date(userData.dateInscription);
         document.getElementById('dateInscription').textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
@@ -113,7 +109,6 @@
         document.getElementById('dateInscription').textContent = '-';
       }
 
-      // Charger les personnages
       if (userData.personnages) {
         displayCharacters(userData.personnages);
       }
@@ -134,7 +129,6 @@
             <img src="assets/delete.png" alt="Supprimer" class="delete-icon" onclick="deleteCharacter('${key}')" title="Supprimer le personnage" />
           </div>
         `;
-
         container.appendChild(card);
       });
     }
@@ -155,7 +149,7 @@
         persoRef.remove()
           .then(() => {
             alert("Personnage supprimé !");
-            loadUserInfo(pseudo); // Recharge les persos à l'écran
+            loadUserInfo(pseudo);
           })
           .catch((error) => {
             console.error("Erreur lors de la suppression :", error);
