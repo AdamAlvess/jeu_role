@@ -134,8 +134,8 @@ body {
 }
 
 .action-icon {
-  width: 20px;
-  height: 20px;
+  width: 100px;
+  height: 70px;
   cursor: pointer;
   transition: transform 0.2s ease;
   filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.4));

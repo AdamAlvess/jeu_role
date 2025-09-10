@@ -146,15 +146,27 @@
       const resultValue = document.getElementById("resultValue");
 
       if (rollBtn && dice && resultText && resultValue) {
-        rollBtn.addEventListener("click", () => {
+          rollBtn.addEventListener("click", () => {
           dice.classList.add("rolling");
-          const result = Math.floor(Math.random() * 20) + 1;
+          resultText.classList.add("hidden");
 
-          setTimeout(() => {
-            dice.classList.remove("rolling");
-            resultValue.textContent = result;
-            resultText.classList.remove("hidden");
-          }, 1200);
+          const result = Math.floor(Math.random() * 20) + 1;
+          const frames = 20; // nombre de changements d’image
+          const interval = 60; // durée entre chaque image (ms)
+          let count = 0;
+
+          const animation = setInterval(() => {
+            const randomFace = Math.floor(Math.random() * 20) + 1;
+            dice.src = `/assets/d20_${randomFace}.png`;
+            count++;
+            if (count >= frames) {
+              clearInterval(animation);
+              dice.src = `/assets/d20_${result}.png`;
+              resultValue.textContent = result;
+              resultText.classList.remove("hidden");
+              dice.classList.remove("rolling");
+            }
+          }, interval);
         });
       }
     };
