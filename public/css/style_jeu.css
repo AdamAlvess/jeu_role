@@ -139,18 +139,17 @@ body {
 }
 
 /* === Dé === */
+
+
 .dice-container {
   margin-top: 2rem;
   text-align: center;
-  perspective: 1000px;
 }
 
 .dice-img {
   width: 120px;
   height: 120px;
-  margin: auto;
-  display: block;
-  transition: transform 1.2s ease;
+  display: inline-block;
   transform-origin: center;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
   border-radius: 20px;
@@ -177,8 +176,6 @@ body {
     transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg) scale(1);
   }
 }
-
-
 .dice-result {
   margin-top: 1rem;
   font-size: 1.2rem;
