@@ -184,6 +184,21 @@ body {
   font-size: 1.2rem;
   color: #E5D3A8;
 }
+.dice-wrapper {
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  perspective: 1000px;
+}
+
+.dice-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-origin: center;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+}
 
 /* === Hidden class === */
 .hidden {
