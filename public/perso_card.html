@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Personnalisation du personnage</title>
+  <link rel="stylesheet" href="./css/style_perso_card.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Personnalise ton personnage</h1>
+
+    <div class="form-section">
+      <form id="characterForm">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" placeholder="Ex: Arkan">
+
+        <label for="race">Race :</label>
+        <input type="text" id="race" placeholder="Ex: Elfe">
+
+        <label for="force">Force :</label>
+        <input type="number" id="force" min="0" max="100">
+
+        <label for="agilite">Agilité :</label>
+        <input type="number" id="agilite" min="0" max="100">
+
+        <label for="intelligence">Intelligence :</label>
+        <input type="number" id="intelligence" min="0" max="100">
+
+        <button type="submit">Valider</button>
+      </form>
+    </div>
+
+    <div class="card-section" id="characterCard" style="display:none;">
+      <h2>Carte du personnage</h2>
+      <p><strong>Nom :</strong> <span id="cardName"></span></p>
+      <p><strong>Race :</strong> <span id="cardRace"></span></p>
+      <p><strong>Force :</strong> <span id="cardForce"></span></p>
+      <p><strong>Agilité :</strong> <span id="cardAgilite"></span></p>
+      <p><strong>Intelligence :</strong> <span id="cardIntelligence"></span></p>
+    </div>
+  </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
+            authDomain: "jeurole-16332.firebaseapp.com",
+            projectId: "jeurole-16332",
+            storageBucket: "jeurole-16332.appspot.com",
+            messagingSenderId: "465433430644",
+            appId: "1:465433430644:web:6d242f91e2435632fd9f21",
+            databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const pseudo = sessionStorage.getItem("pseudo");
+
+        const form = document.getElementById("characterForm");
+        const card = document.getElementById("characterCard");
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const nom = document.getElementById("name").value;
+            const race = document.getElementById("race").value;
+            const force = parseInt(document.getElementById("force").value);
+            const agilite = parseInt(document.getElementById("agilite").value);
+            const intelligence = parseInt(document.getElementById("intelligence").value);
+
+            // Affichage de la carte
+            document.getElementById("cardName").textContent = nom;
+            document.getElementById("cardRace").textContent = race;
+            document.getElementById("cardForce").textContent = force;
+            document.getElementById("cardAgilite").textContent = agilite;
+            document.getElementById("cardIntelligence").textContent = intelligence;
+            card.style.display = "block";
+
+            // Enregistrement dans Firebase
+            if (!pseudo) {
+            alert("Pseudo non trouvé dans la session !");
+            return;
+            }
+
+            const newCharacterRef = db.ref(`user/${pseudo}/personnages`).push();
+            newCharacterRef.set({
+            nom: nom,
+            race: race,
+            force: force,
+            agilite: agilite,
+            intelligence: intelligence,
+            niveau: 1 // tu peux le rendre dynamique si tu veux
+            }).then(() => {
+            console.log("✅ Personnage enregistré !");
+            }).catch(error => {
+            console.error("❌ Erreur lors de l'enregistrement :", error);
+            });
+        });
+    </script>
+</body>
+</html>
