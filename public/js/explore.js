@@ -72,6 +72,7 @@ function selectCharacter(id) {
   sessionStorage.setItem("selectedPersoId", id);
   window.location.href = "jeu.html";
 }
+
 function deleteCharacter(persoId) {
       if (!pseudo) {
         alert("Aucun pseudo trouvé !");
@@ -82,7 +83,7 @@ function deleteCharacter(persoId) {
         const persoRef = db.ref(`user/${pseudo}/personnages/${persoId}`);
         persoRef.remove()
           .then(() => {
-            // alert("Personnage supprimé !");
+            alert("Personnage supprimé !");
             loadUserInfo(pseudo);
           })
           .catch((error) => {
