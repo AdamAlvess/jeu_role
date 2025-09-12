@@ -10,6 +10,14 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 </head>
 <body>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="/home.html">ACCUEIL</a></li>
+      <li><a href="/propos.html">À PROPOS</a></li>
+      <li><a href="/explore.html">EXPLORER</a></li>
+    </ul>
+  </nav>
+
   <div class="container">
     <h1>Personnalise ton personnage</h1>
 
@@ -18,8 +26,21 @@
         <label for="name">Nom :</label>
         <input type="text" id="name" placeholder="Ex: Arkan">
 
-        <label for="race">Race :</label>
-        <input type="text" id="race" placeholder="Ex: Elfe">
+        <label for="raceSelect">Race :</label>
+        <select id="raceSelect">
+          <option value="Humain">Humain</option>
+          <option value="Elfe">Elfe</option>
+          <option value="Orque">Orque</option>
+          <option value="Nain">Nain</option>
+          <option value="Démon">Démon</option>
+        </select>
+
+        <div id="customRaceContainer" style="display:none;">
+          <label for="raceInput">Race personnalisée :</label>
+          <input type="text" id="raceInput" placeholder="Ex: Dragon">
+        </div>
+
+        <button type="button" id="toggleRaceInput">Ajout race</button>
 
         <label for="force">Force :</label>
         <input type="number" id="force" min="0" max="20">
@@ -42,8 +63,10 @@
         <label for="intelligence">Intelligence :</label>
         <input type="number" id="intelligence" min="0" max="20">
 
-        <button type="submit">Valider</button>
       </form>
+      <div style="text-align:center;">
+        <button type="submit">Valider</button>
+      </div>
     </div>
 
     <div class="card-section" id="characterCard" style="display:none;">
@@ -75,6 +98,19 @@
     const db = firebase.database();
     const pseudo = sessionStorage.getItem("pseudo");
 
+    document.getElementById("toggleRaceInput").addEventListener("click", () => {
+      const select = document.getElementById("raceSelect");
+      const inputContainer = document.getElementById("customRaceContainer");
+
+      if (select.style.display !== "none") {
+        select.style.display = "none";
+        inputContainer.style.display = "block";
+      } else {
+        select.style.display = "block";
+        inputContainer.style.display = "none";
+      }
+    });
+
     const form = document.getElementById("characterForm");
     const card = document.getElementById("characterCard");
 
@@ -82,7 +118,7 @@
       e.preventDefault();
 
       const nom = document.getElementById("name").value;
-      const race = document.getElementById("race").value;
+      const race = document.getElementById("raceInput").value || document.getElementById("raceSelect").value;
       const force = parseInt(document.getElementById("force").value);
       const agilite = parseInt(document.getElementById("agilite").value);
       const dexterite = parseInt(document.getElementById("dexterite").value);
@@ -91,7 +127,6 @@
       const charisme = parseInt(document.getElementById("charisme").value);
       const intelligence = parseInt(document.getElementById("intelligence").value);
 
-      // Affichage de la carte
       document.getElementById("cardName").textContent = nom;
       document.getElementById("cardRace").textContent = race;
       document.getElementById("cardForce").textContent = force;
@@ -104,28 +139,22 @@
 
       card.style.display = "block";
 
-      // Enregistrement dans Firebase
       if (!pseudo) {
-        alert("Pseudo non trouvé dans la session !");
+        alert("Pseudo non trouvé !");
         return;
       }
 
       const newCharacterRef = db.ref(`user/${pseudo}/personnages`).push();
+      const characterId = newCharacterRef.key;
+
       newCharacterRef.set({
-        nom: nom,
-        race: race,
-        force: force,
-        agilite: agilite,
-        dexterite: dexterite,
-        perception: perception,
-        constitution: constitution,
-        charisme: charisme,
-        intelligence: intelligence,
-        niveau: 1
+        nom, race, force, agilite, dexterite, perception,
+        constitution, charisme, intelligence, niveau: 1
       }).then(() => {
-        console.log("✅ Personnage enregistré !");
+        sessionStorage.setItem("selectedPersoId", characterId);
+        window.location.href = "jeu.html";
       }).catch(error => {
-        console.error("❌ Erreur lors de l'enregistrement :", error);
+        console.error("❌ Erreur Firebase :", error);
       });
     });
   </script>
