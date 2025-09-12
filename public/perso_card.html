@@ -20,13 +20,25 @@
         <input type="text" id="race" placeholder="Ex: Elfe">
 
         <label for="force">Force :</label>
-        <input type="number" id="force" min="0" max="100">
+        <input type="number" id="force" min="0" max="20">
 
         <label for="agilite">Agilité :</label>
-        <input type="number" id="agilite" min="0" max="100">
+        <input type="number" id="agilite" min="0" max="20">
+
+        <label for="dexterite">Dextérité :</label>
+        <input type="number" id="dexterite" min="0" max="20">
+
+        <label for="perception">Perception :</label>
+        <input type="number" id="perception" min="0" max="20">
+
+        <label for="constitution">Constitution :</label>
+        <input type="number" id="constitution" min="0" max="20">
+
+        <label for="charisme">Charisme :</label>
+        <input type="number" id="charisme" min="0" max="20">
 
         <label for="intelligence">Intelligence :</label>
-        <input type="number" id="intelligence" min="0" max="100">
+        <input type="number" id="intelligence" min="0" max="20">
 
         <button type="submit">Valider</button>
       </form>
@@ -38,65 +50,82 @@
       <p><strong>Race :</strong> <span id="cardRace"></span></p>
       <p><strong>Force :</strong> <span id="cardForce"></span></p>
       <p><strong>Agilité :</strong> <span id="cardAgilite"></span></p>
+      <p><strong>Dextérité :</strong> <span id="cardDexterite"></span></p>
+      <p><strong>Perception :</strong> <span id="cardPerception"></span></p>
+      <p><strong>Constitution :</strong> <span id="cardConstitution"></span></p>
+      <p><strong>Charisme :</strong> <span id="cardCharisme"></span></p>
       <p><strong>Intelligence :</strong> <span id="cardIntelligence"></span></p>
     </div>
   </div>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
-            authDomain: "jeurole-16332.firebaseapp.com",
-            projectId: "jeurole-16332",
-            storageBucket: "jeurole-16332.appspot.com",
-            messagingSenderId: "465433430644",
-            appId: "1:465433430644:web:6d242f91e2435632fd9f21",
-            databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
-        };
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnrds31zJ9YQ4ldmkPWBrlSwHo4to_BE4",
+      authDomain: "jeurole-16332.firebaseapp.com",
+      projectId: "jeurole-16332",
+      storageBucket: "jeurole-16332.appspot.com",
+      messagingSenderId: "465433430644",
+      appId: "1:465433430644:web:6d242f91e2435632fd9f21",
+      databaseURL: "https://jeurole-16332-default-rtdb.europe-west1.firebasedatabase.app"
+    };
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const pseudo = sessionStorage.getItem("pseudo");
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const pseudo = sessionStorage.getItem("pseudo");
 
-        const form = document.getElementById("characterForm");
-        const card = document.getElementById("characterCard");
+    const form = document.getElementById("characterForm");
+    const card = document.getElementById("characterCard");
 
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
 
-            const nom = document.getElementById("name").value;
-            const race = document.getElementById("race").value;
-            const force = parseInt(document.getElementById("force").value);
-            const agilite = parseInt(document.getElementById("agilite").value);
-            const intelligence = parseInt(document.getElementById("intelligence").value);
+      const nom = document.getElementById("name").value;
+      const race = document.getElementById("race").value;
+      const force = parseInt(document.getElementById("force").value);
+      const agilite = parseInt(document.getElementById("agilite").value);
+      const dexterite = parseInt(document.getElementById("dexterite").value);
+      const perception = parseInt(document.getElementById("perception").value);
+      const constitution = parseInt(document.getElementById("constitution").value);
+      const charisme = parseInt(document.getElementById("charisme").value);
+      const intelligence = parseInt(document.getElementById("intelligence").value);
 
-            // Affichage de la carte
-            document.getElementById("cardName").textContent = nom;
-            document.getElementById("cardRace").textContent = race;
-            document.getElementById("cardForce").textContent = force;
-            document.getElementById("cardAgilite").textContent = agilite;
-            document.getElementById("cardIntelligence").textContent = intelligence;
-            card.style.display = "block";
+      // Affichage de la carte
+      document.getElementById("cardName").textContent = nom;
+      document.getElementById("cardRace").textContent = race;
+      document.getElementById("cardForce").textContent = force;
+      document.getElementById("cardAgilite").textContent = agilite;
+      document.getElementById("cardDexterite").textContent = dexterite;
+      document.getElementById("cardPerception").textContent = perception;
+      document.getElementById("cardConstitution").textContent = constitution;
+      document.getElementById("cardCharisme").textContent = charisme;
+      document.getElementById("cardIntelligence").textContent = intelligence;
 
-            // Enregistrement dans Firebase
-            if (!pseudo) {
-            alert("Pseudo non trouvé dans la session !");
-            return;
-            }
+      card.style.display = "block";
 
-            const newCharacterRef = db.ref(`user/${pseudo}/personnages`).push();
-            newCharacterRef.set({
-            nom: nom,
-            race: race,
-            force: force,
-            agilite: agilite,
-            intelligence: intelligence,
-            niveau: 1 // tu peux le rendre dynamique si tu veux
-            }).then(() => {
-            console.log("✅ Personnage enregistré !");
-            }).catch(error => {
-            console.error("❌ Erreur lors de l'enregistrement :", error);
-            });
-        });
-    </script>
+      // Enregistrement dans Firebase
+      if (!pseudo) {
+        alert("Pseudo non trouvé dans la session !");
+        return;
+      }
+
+      const newCharacterRef = db.ref(`user/${pseudo}/personnages`).push();
+      newCharacterRef.set({
+        nom: nom,
+        race: race,
+        force: force,
+        agilite: agilite,
+        dexterite: dexterite,
+        perception: perception,
+        constitution: constitution,
+        charisme: charisme,
+        intelligence: intelligence,
+        niveau: 1
+      }).then(() => {
+        console.log("✅ Personnage enregistré !");
+      }).catch(error => {
+        console.error("❌ Erreur lors de l'enregistrement :", error);
+      });
+    });
+  </script>
 </body>
 </html>
