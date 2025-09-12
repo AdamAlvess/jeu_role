@@ -72,5 +72,24 @@ function selectCharacter(id) {
   sessionStorage.setItem("selectedPersoId", id);
   window.location.href = "jeu.html";
 }
+function deleteCharacter(persoId) {
+      if (!pseudo) {
+        alert("Aucun pseudo trouvé !");
+        return;
+      }
+
+      if (confirm("Es-tu sûr de vouloir supprimer ce personnage ?")) {
+        const persoRef = db.ref(`user/${pseudo}/personnages/${persoId}`);
+        persoRef.remove()
+          .then(() => {
+            // alert("Personnage supprimé !");
+            loadUserInfo(pseudo);
+          })
+          .catch((error) => {
+            console.error("Erreur lors de la suppression :", error);
+            alert("Échec de la suppression du personnage.");
+          });
+      }
+    }
 
 loadCharacters();

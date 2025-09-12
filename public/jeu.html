@@ -199,7 +199,7 @@
       const notesRef = db.ref(`user/${pseudo}/personnages/${persoId}/notes`);
       notesRef.set({ stuff, inventory, gold })
         .then(() => {
-          alert("✅ Notes sauvegardées !");
+          // alert("✅ Notes sauvegardées !");
         })
         .catch(err => {
           console.error("❌ Erreur de sauvegarde des notes :", err);
