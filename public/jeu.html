@@ -207,14 +207,20 @@
         });
     });
     const dice = document.getElementById('diceImage');
+    const resultValue = document.getElementById('resultValue');
+
     let isDragging = false;
     let offsetX = 0;
     let offsetY = 0;
+    let startX = 0;
+    let startY = 0;
 
     dice.addEventListener('mousedown', (e) => {
       isDragging = true;
       offsetX = e.offsetX;
       offsetY = e.offsetY;
+      startX = e.pageX;
+      startY = e.pageY;
       dice.style.cursor = 'grabbing';
     });
 
@@ -225,39 +231,49 @@
       }
     });
 
-    document.addEventListener('mouseup', () => {
+    document.addEventListener('mouseup', (e) => {
       if (isDragging) {
         isDragging = false;
         dice.style.cursor = 'grab';
-        launchDice();
+
+        const moved = Math.abs(e.pageX - startX) > 5 || Math.abs(e.pageY - startY) > 5;
+        if (moved) {
+          launchDice();
+        }
       }
     });
 
     function launchDice() {
-      let velocityY = -20;
+      let velocityY = 10;
       let positionY = parseInt(dice.style.top) || 300;
       const gravity = 1;
       const bounceFactor = 0.6;
+      const maxBottom = window.innerHeight - dice.offsetHeight;
 
+      let bounceCount = 0;
       const interval = setInterval(() => {
         velocityY += gravity;
         positionY += velocityY;
 
-        if (positionY >= window.innerHeight - dice.offsetHeight) {
+        if (positionY >= maxBottom) {
           velocityY *= -bounceFactor;
-          positionY = window.innerHeight - dice.offsetHeight;
+          positionY = maxBottom;
+          bounceCount++;
         }
 
         dice.style.top = `${positionY}px`;
 
-        if (Math.abs(velocityY) < 1) {
-          clearInterval(interval);
-        }
-      }, 20);
+        // Changement de face pendant le rebond
+        const randomFace = Math.floor(Math.random() * 20) + 1;
+        dice.src = `/assets/d20_${randomFace}.png`;
 
-      // Animation de rotation
-      dice.classList.add('rolling');
-      setTimeout(() => dice.classList.remove('rolling'), 1200);
+        if (bounceCount > 3 && Math.abs(velocityY) < 2) {
+          clearInterval(interval);
+          const finalFace = Math.floor(Math.random() * 20) + 1;
+          dice.src = `/assets/d20_${finalFace}.png`;
+          resultValue.textContent = finalFace;
+        }
+      }, 50);
     }
   </script>
 </body>

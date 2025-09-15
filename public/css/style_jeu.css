@@ -150,7 +150,6 @@ body {
   position: absolute;
   cursor: grab;
   transition: transform 0.2s ease;
-
 }
 
 .rolling {
