@@ -206,7 +206,59 @@
           alert("Erreur lors de l'enregistrement des notes.");
         });
     });
+    const dice = document.getElementById('dice');
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
 
+    dice.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      offsetX = e.offsetX;
+      offsetY = e.offsetY;
+      dice.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        dice.style.left = `${e.pageX - offsetX}px`;
+        dice.style.top = `${e.pageY - offsetY}px`;
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        dice.style.cursor = 'grab';
+        launchDice();
+      }
+    });
+
+    function launchDice() {
+      let velocityY = -20;
+      let positionY = parseInt(dice.style.top) || 300;
+      const gravity = 1;
+      const bounceFactor = 0.6;
+
+      const interval = setInterval(() => {
+        velocityY += gravity;
+        positionY += velocityY;
+
+        if (positionY >= window.innerHeight - dice.offsetHeight) {
+          velocityY *= -bounceFactor;
+          positionY = window.innerHeight - dice.offsetHeight;
+        }
+
+        dice.style.top = `${positionY}px`;
+
+        if (Math.abs(velocityY) < 1) {
+          clearInterval(interval);
+        }
+      }, 20);
+
+      // Animation de rotation
+      dice.classList.add('rolling');
+      setTimeout(() => dice.classList.remove('rolling'), 1200);
+    }
   </script>
 </body>
 </html>

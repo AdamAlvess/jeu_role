@@ -147,6 +147,10 @@ body {
   transform-origin: center;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
   border-radius: 20px;
+  position: absolute;
+  cursor: grab;
+  transition: transform 0.2s ease;
+
 }
 
 .rolling {
