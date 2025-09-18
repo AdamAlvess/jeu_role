@@ -198,13 +198,11 @@
       if (charging) return;
       charging = true;
       charge = 0;
-      chargeFill.style.height = "0%";
       chargeValueDisplay.textContent = "0%";
       trigger.style.transform = "rotate(-30deg)";
 
       chargeInterval = setInterval(() => {
         charge = Math.min(charge + 1, 100);
-        chargeFill.style.height = `${charge}%`;
         chargeValueDisplay.textContent = `${charge}%`;
       }, 20);
     }
@@ -216,7 +214,6 @@
       clearInterval(chargeInterval);
       trigger.style.transform = "rotate(0deg)";
       chargeValueDisplay.textContent = `${charge}%`;
-      chargeFill.style.height = "0%"; // reset visuel
 
 
       const statValue = Math.floor((charge / 100) * 18) + 1;
