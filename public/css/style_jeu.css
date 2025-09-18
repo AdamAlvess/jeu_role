@@ -251,3 +251,28 @@ body {
   color: #fff;
   font-family: 'Roboto', sans-serif;
 }
+
+.stat-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.stat-btn {
+  background-color: #BC4841;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 0 5px rgba(139, 0, 0, 0.3);
+  transition: background-color 0.2s ease;
+}
+
+.stat-btn:hover {
+  background-color: #d34f48;
+}

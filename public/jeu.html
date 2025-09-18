@@ -73,25 +73,70 @@
     }
 
     function afficherFiche(perso, id) {
-      const stats = [
-        `Force : ${perso.force || "?"}`,
-        `Agilité : ${perso.agilite || "?"}`,
-        `Intelligence : ${perso.intelligence || "?"}`,
-        `Constitution : ${perso.constitution || "?"}`,
-        `Charisme : ${perso.charisme || "?"}`,
-        `Perception : ${perso.perception || "?"}`,
-        `Dextérité : ${perso.dexterite || "?"}`
-      ];
+       document.getElementById("charName").textContent = "Nom : " + (perso.nom || id || "Inconnu");
+       document.getElementById("charRace").textContent = "Race : " + (perso.race || "Inconnue");
 
-      document.getElementById("charName").textContent = "Nom : " + (perso.nom || id || "Inconnu");
-      document.getElementById("charRace").textContent = "Race : " + (perso.race || "Inconnue");
-      document.getElementById("charStats").innerHTML = stats.join("<br>");
-      if (perso.notes) {
-        document.getElementById("stuff").value = perso.notes.stuff || "";
-        document.getElementById("inventory").value = perso.notes.inventory || "";
-        document.getElementById("gold").value = perso.notes.gold || 0;
-      }
-      
+       const statsContainer = document.getElementById("charStats");
+       statsContainer.innerHTML = ""; // reset
+
+       const statNames = [
+         "force", "agilite", "intelligence", "constitution",
+         "charisme", "perception", "dexterite"
+       ];
+
+       statNames.forEach(stat => {
+         const value = perso[stat] ?? 0;
+
+         const statRow = document.createElement("div");
+         statRow.className = "stat-row";
+
+         const minusBtn = document.createElement("button");
+         minusBtn.textContent = "➖";
+         minusBtn.className = "stat-btn";
+         minusBtn.onclick = () => updateStat(stat, -1);
+
+         const plusBtn = document.createElement("button");
+         plusBtn.textContent = "➕";
+         plusBtn.className = "stat-btn";
+         plusBtn.onclick = () => updateStat(stat, 1);
+
+         const statLabel = document.createElement("span");
+         statLabel.id = `stat-${stat}`;
+         statLabel.textContent = `${capitalize(stat)} : ${value}`;
+
+         statRow.appendChild(minusBtn);
+         statRow.appendChild(statLabel);
+         statRow.appendChild(plusBtn);
+
+         statsContainer.appendChild(statRow);
+       });
+
+       if (perso.notes) {
+         document.getElementById("stuff").value = perso.notes.stuff || "";
+         document.getElementById("inventory").value = perso.notes.inventory || "";
+         document.getElementById("gold").value = perso.notes.gold || 0;
+       }
+    }
+
+    function updateStat(statName, delta) {
+      if (!pseudo || !persoId) return;
+
+      const statLabel = document.getElementById(`stat-${statName}`);
+      const currentText = statLabel.textContent;
+      const currentValue = parseInt(currentText.split(":")[1]) || 0;
+      const newValue = Math.max(0, currentValue + delta); // empêche valeur négative
+
+      statLabel.textContent = `${capitalize(statName)} : ${newValue}`;
+
+      db.ref(`user/${pseudo}/personnages/${persoId}/${statName}`).set(newValue)
+        .catch(err => {
+          console.error(`Erreur mise à jour ${statName} :`, err);
+          alert("Erreur lors de la mise à jour de la statistique.");
+        });
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     function getStat(name) {
