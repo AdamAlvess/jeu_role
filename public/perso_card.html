@@ -43,7 +43,14 @@
         <button type="button" id="toggleRaceInput">Ajout race</button>
 
         <label for="force">Force :</label>
-        <input type="number" id="force" min="0" max="20">
+        <div class="stat-launcher" data-stat="force">
+          <img src="/assets/biceps.png" alt="Force" class="stat-trigger" />
+          <div class="stat-bar">
+            <div class="charge-bar"></div>
+            <div class="ball"></div>
+          </div>
+          <span class="stat-value" id="forceValue">?</span>
+        </div>
 
         <label for="agilite">Agilité :</label>
         <input type="number" id="agilite" min="0" max="20">
@@ -156,6 +163,54 @@
       }).catch(error => {
         console.error("❌ Erreur Firebase :", error);
       });
+    });
+
+    document.querySelectorAll(".stat-launcher").forEach(launcher => {
+      const trigger = launcher.querySelector(".stat-trigger");
+      const chargeBar = launcher.querySelector(".charge-bar");
+      const ball = launcher.querySelector(".ball");
+      const valueDisplay = launcher.querySelector(".stat-value");
+      const statKey = launcher.dataset.stat;
+
+      let charge = 0;
+      let charging = false;
+      let chargeInterval;
+
+      trigger.addEventListener("mousedown", startCharge);
+      trigger.addEventListener("touchstart", startCharge);
+
+      document.addEventListener("mouseup", releaseCharge);
+      document.addEventListener("touchend", releaseCharge);
+
+      function startCharge(e) {
+        e.preventDefault();
+        if (charging) return;
+        charging = true;
+        charge = 0;
+        chargeBar.style.width = "0%";
+        chargeInterval = setInterval(() => {
+          charge = Math.min(charge + 1, 100);
+          chargeBar.style.width = `${charge}%`;
+        }, 20);
+      }
+
+      function releaseCharge() {
+        if (!charging) return;
+        charging = false;
+        clearInterval(chargeInterval);
+
+        const statValue = Math.floor((charge / 100) * 18) + 1;
+        valueDisplay.textContent = statValue;
+
+        const barWidth = launcher.querySelector(".stat-bar").offsetWidth;
+        const ballX = (statValue - 1) / 18 * barWidth;
+        ball.style.left = `${ballX}px`;
+
+        if (pseudo) {
+          db.ref(`user/${pseudo}/tempStats/${statKey}`).set(statValue)
+            .catch(err => console.error(`Erreur mise à jour ${statKey} :`, err));
+        }
+      }
     });
   </script>
 </body>
