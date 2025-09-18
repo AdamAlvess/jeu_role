@@ -96,31 +96,44 @@ button:hover {
 
 /* === Tir de canon === */
 .stat-launcher {
-  position: relative;
-  margin: 2rem auto;
-  width: 100%;
-  max-width: 500px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
 }
 
-.canon-container {
-  display: inline-block;
-  transform-origin: bottom center;
-  transition: transform 0.3s ease;
+.canon-zone {
+  position: relative;
+  width: 60px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .stat-trigger {
   width: 60px;
   height: 60px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-.trajectory-zone {
+.charge-indicator {
+  width: 10px;
+  height: 0%;
+  background: linear-gradient(to top, #BC4841, #E5D3A8);
+  border-radius: 5px;
+  margin-top: 5px;
+  transition: height 0.1s ease;
+}
+
+.target-line {
   position: relative;
-  height: 150px;
-  margin-top: 1rem;
-  background: linear-gradient(to top, #1a1f2e, #2c2f3a);
-  border-radius: 12px;
+  flex: 1;
+  height: 60px;
+  background: #2c2f3a;
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(255, 215, 0, 0.2);
   overflow: hidden;
 }
 
@@ -130,25 +143,26 @@ button:hover {
   height: 14px;
   background: #E5D3A8;
   border-radius: 50%;
-  box-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
-  top: 120px;
+  top: 0;
   left: 0;
   display: none;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
 }
 
-.landing-line {
+.scale {
   position: absolute;
   bottom: 0;
-  left: 0;
-  height: 4px;
   width: 100%;
-  background: #BC4841;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #E5D3A8;
+  padding: 0 5px;
 }
 
 .stat-value {
-  display: block;
-  margin-top: 1rem;
   font-family: 'Cinzel', serif;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: #E5D3A8;
+  margin-left: 1rem;
 }

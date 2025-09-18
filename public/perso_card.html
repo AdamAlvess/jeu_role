@@ -44,15 +44,19 @@
 
         <label for="force">Force :</label>
         <div class="stat-launcher" data-stat="force">
-        <div class="canon-container">
-          <img src="/assets/biceps.png" alt="Force" class="stat-trigger" />
+          <div class="canon-zone">
+            <img src="/assets/biceps.png" alt="Force" class="stat-trigger" />
+            <div class="charge-indicator"></div>
+          </div>
+          <div class="target-line">
+            <div class="ball"></div>
+            <div class="scale">
+              <!-- graduations -->
+              <span>1</span><span>5</span><span>10</span><span>15</span><span>19</span>
+            </div>
+          </div>
+          <span class="stat-value" id="forceValue">?</span>
         </div>
-        <div class="trajectory-zone">
-          <div class="ball"></div>
-          <div class="landing-line"></div>
-        </div>
-        <span class="stat-value" id="forceValue">?</span>
-      </div>
 
         <label for="agilite">Agilité :</label>
         <input type="number" id="agilite" min="0" max="20">
@@ -169,7 +173,7 @@
 
     document.querySelectorAll(".stat-launcher").forEach(launcher => {
     const trigger = launcher.querySelector(".stat-trigger");
-    const canon = launcher.querySelector(".canon-container");
+    const chargeBar = launcher.querySelector(".charge-indicator");
     const ball = launcher.querySelector(".ball");
     const valueDisplay = launcher.querySelector(".stat-value");
     const statKey = launcher.dataset.stat;
@@ -189,9 +193,11 @@
       if (charging) return;
       charging = true;
       charge = 0;
-      canon.style.transform = "rotate(-30deg)";
+      chargeBar.style.height = "0%";
+      trigger.style.transform = "rotate(-30deg)";
       chargeInterval = setInterval(() => {
         charge = Math.min(charge + 1, 100);
+        chargeBar.style.height = `${charge}%`;
       }, 20);
     }
 
@@ -199,20 +205,19 @@
       if (!charging) return;
       charging = false;
       clearInterval(chargeInterval);
-      canon.style.transform = "rotate(0deg)";
+      trigger.style.transform = "rotate(0deg)";
 
       const statValue = Math.floor((charge / 100) * 18) + 1;
       valueDisplay.textContent = statValue;
 
-      // Tir en cloche
-      ball.style.display = "block";
-      ball.style.top = "120px";
-      ball.style.left = "0px";
-
-      const zoneWidth = launcher.querySelector(".trajectory-zone").offsetWidth;
-      const maxX = zoneWidth - 14;
-      const peakHeight = 80 + (charge / 100) * 40;
+      const lineWidth = launcher.querySelector(".target-line").offsetWidth;
+      const maxX = lineWidth - 14;
+      const peakHeight = 60 + (charge / 100) * 40;
       const duration = 1000;
+
+      ball.style.display = "block";
+      ball.style.top = "0px";
+      ball.style.left = "0px";
 
       let start = null;
       function animateBall(timestamp) {
@@ -221,10 +226,10 @@
         const t = Math.min(progress / duration, 1);
 
         const x = t * maxX;
-        const y = 120 - (4 * peakHeight * t * (1 - t)); // parabole
+        const y = peakHeight * (1 - Math.pow(2 * t - 1, 2)); // parabole
 
         ball.style.left = `${x}px`;
-        ball.style.top = `${y}px`;
+        ball.style.top = `${60 - y}px`;
 
         if (t < 1) {
           requestAnimationFrame(animateBall);
