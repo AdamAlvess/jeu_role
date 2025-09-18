@@ -259,17 +259,24 @@
 
     function launchDice() {
       let velocityY = 10;
+      let velocityX = (Math.random() * 10 + 5) * (Math.random() < 0.5 ? -1 : 1); // vitesse aléatoire gauche/droite
       let positionY = parseInt(dice.style.top) || 300;
+      let positionX = parseInt(dice.style.left) || 300;
+
       const gravity = 1;
       const bounceFactor = 0.6;
+      const friction = 0.98;
+
       const maxBottom = window.innerHeight - dice.offsetHeight;
+      const maxRight = window.innerWidth - dice.offsetWidth;
 
       let bounceCount = 0;
-
-      // Ajout de l'effet de rotation
-      dice.classList.add("rolling");
+      let rotationX = 0;
+      let rotationY = 0;
+      let rotationZ = 0;
 
       const interval = setInterval(() => {
+        // Gravité et rebond vertical
         velocityY += gravity;
         positionY += velocityY;
 
@@ -279,19 +286,36 @@
           bounceCount++;
         }
 
-        dice.style.top = `${positionY}px`;
+        // Mouvement horizontal + rebond latéral
+        positionX += velocityX;
+        velocityX *= friction;
 
+        if (positionX <= 0 || positionX >= maxRight) {
+          velocityX *= -bounceFactor;
+          positionX = Math.max(0, Math.min(positionX, maxRight));
+        }
+
+        dice.style.top = `${positionY}px`;
+        dice.style.left = `${positionX}px`;
+
+        // Rotation dynamique
+        rotationX += 15;
+        rotationY += 20;
+        rotationZ += 10;
+        dice.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) rotateZ(${rotationZ}deg)`;
+
+        // Changement de face
         const randomFace = Math.floor(Math.random() * 20) + 1;
         dice.src = `/assets/d20_${randomFace}.png`;
 
-        if (bounceCount > 3 && Math.abs(velocityY) < 2) {
+        // Fin du lancer
+        if (bounceCount > 3 && Math.abs(velocityY) < 2 && Math.abs(velocityX) < 1) {
           clearInterval(interval);
           const finalFace = Math.floor(Math.random() * 20) + 1;
           dice.src = `/assets/d20_${finalFace}.png`;
           resultValue.textContent = finalFace;
 
-          // Retrait de l'effet de rotation
-          dice.classList.remove("rolling");
+          dice.style.transform = `rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
         }
       }, 50);
     }
