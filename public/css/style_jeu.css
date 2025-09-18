@@ -257,22 +257,26 @@ body {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #E5D3A8;
 }
 
 .stat-btn {
-  background-color: #BC4841;
-  color: white;
+  background-color: #BC4841; /* rouge profond comme tes autres boutons */
+  color: #E5D3A8; /* doré clair comme tes titres */
   border: none;
-  padding: 0.3rem 0.6rem;
-  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
   font-size: 1rem;
-  box-shadow: 0 0 5px rgba(139, 0, 0, 0.3);
-  transition: background-color 0.2s ease;
+  font-family: 'Cinzel', serif;
+  box-shadow: 0 0 8px rgba(188, 72, 65, 0.3);
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .stat-btn:hover {
   background-color: #d34f48;
+  transform: scale(1.05);
 }
