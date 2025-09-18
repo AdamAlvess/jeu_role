@@ -46,7 +46,9 @@
         <div class="stat-launcher" data-stat="force">
           <div class="canon-zone">
             <img src="/assets/biceps.png" alt="Force" class="stat-trigger" />
-            <div class="charge-indicator"></div>
+            <div class="charge-indicator">
+              <div class="charge-fill"></div>
+            </div>
             <div class="charge-value">0%</div>
           </div>
           <div class="target-line">
@@ -190,6 +192,13 @@
     document.addEventListener("touchend", releaseCharge);
 
     const chargeValueDisplay = launcher.querySelector(".charge-value");
+    const chargeFill = launcher.querySelector(".charge-fill");
+
+    chargeInterval = setInterval(() => {
+      charge = Math.min(charge + 1, 100);
+      chargeFill.style.height = `${charge}%`;
+      chargeValueDisplay.textContent = `${charge}%`;
+    }, 20);
 
     function startCharge(e) {
       e.preventDefault();
@@ -201,7 +210,7 @@
       trigger.style.transform = "rotate(-30deg)";
       chargeInterval = setInterval(() => {
         charge = Math.min(charge + 1, 100);
-        chargeBar.style.height = `${charge}%`;
+        chargeBar.querySelector("::after").style.height = `${charge}%`;
         chargeValueDisplay.textContent = `${charge}%`;
       }, 20);
     }
