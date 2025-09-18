@@ -147,6 +147,7 @@ button:hover {
   color: #E5D3A8;
   font-weight: bold;
   text-align: center;
+  transform: translateX(-10px); /* ← décalage vers la gauche */
 }
 
 .target-line {
