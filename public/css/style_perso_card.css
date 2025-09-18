@@ -105,10 +105,22 @@ button:hover {
 .canon-zone {
   position: relative;
   width: 60px;
-  height: 100px;
+  height: 160px; /* ← augmenté pour plus de place */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+}
+
+.canon-zone::before {
+  content: "";
+  position: absolute;
+  top: 65px;
+  width: 14px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  z-index: 0;
 }
 
 .stat-trigger {
@@ -125,6 +137,7 @@ button:hover {
   border-radius: 5px;
   margin-top: 5px;
   transition: height 0.1s ease;
+  max-height: 100px; /* ← facultatif si tu veux limiter visuellement */
 }
 
 .target-line {
