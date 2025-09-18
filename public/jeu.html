@@ -206,40 +206,54 @@
           alert("Erreur lors de l'enregistrement des notes.");
         });
     });
-    const dice = document.getElementById('diceImage');
-    const resultValue = document.getElementById('resultValue');
 
-    let isDragging = false;
-    let offsetX = 0;
-    let offsetY = 0;
-    let startX = 0;
-    let startY = 0;
+    // === Dé interactif ===
+    const dice = document.getElementById("diceImage");
+    const resultValue = document.getElementById("resultValue");
+    let isSelected = false;
+    let followMouse = false;
 
-    dice.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      offsetX = e.offsetX;
-      offsetY = e.offsetY;
-      startX = e.pageX;
-      startY = e.pageY;
-      dice.style.cursor = 'grabbing';
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (isDragging) {
-        dice.style.left = `${e.pageX - offsetX}px`;
-        dice.style.top = `${e.pageY - offsetY}px`;
+    // Desktop
+    dice.addEventListener("click", () => {
+      if (!isSelected) {
+        isSelected = true;
+        followMouse = true;
+        dice.style.cursor = "grabbing";
+      } else {
+        isSelected = false;
+        followMouse = false;
+        dice.style.cursor = "grab";
+        launchDice();
       }
     });
 
-    document.addEventListener('mouseup', (e) => {
-      if (isDragging) {
-        isDragging = false;
-        dice.style.cursor = 'grab';
+    document.addEventListener("mousemove", (e) => {
+      if (followMouse) {
+        dice.style.left = `${e.pageX - dice.offsetWidth / 2}px`;
+        dice.style.top = `${e.pageY - dice.offsetHeight / 2}px`;
+      }
+    });
 
-        const moved = Math.abs(e.pageX - startX) > 5 || Math.abs(e.pageY - startY) > 5;
-        if (moved) {
-          launchDice();
-        }
+    // Mobile
+    dice.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      if (!isSelected) {
+        isSelected = true;
+        followMouse = true;
+        dice.style.cursor = "grabbing";
+      } else {
+        isSelected = false;
+        followMouse = false;
+        dice.style.cursor = "grab";
+        launchDice();
+      }
+    });
+
+    document.addEventListener("touchmove", (e) => {
+      if (followMouse && e.touches.length > 0) {
+        const touch = e.touches[0];
+        dice.style.left = `${touch.pageX - dice.offsetWidth / 2}px`;
+        dice.style.top = `${touch.pageY - dice.offsetHeight / 2}px`;
       }
     });
 
@@ -263,7 +277,6 @@
 
         dice.style.top = `${positionY}px`;
 
-        // Changement de face pendant le rebond
         const randomFace = Math.floor(Math.random() * 20) + 1;
         dice.src = `/assets/d20_${randomFace}.png`;
 
