@@ -265,6 +265,10 @@
       const maxBottom = window.innerHeight - dice.offsetHeight;
 
       let bounceCount = 0;
+
+      // Ajout de l'effet de rotation
+      dice.classList.add("rolling");
+
       const interval = setInterval(() => {
         velocityY += gravity;
         positionY += velocityY;
@@ -285,6 +289,9 @@
           const finalFace = Math.floor(Math.random() * 20) + 1;
           dice.src = `/assets/d20_${finalFace}.png`;
           resultValue.textContent = finalFace;
+
+          // Retrait de l'effet de rotation
+          dice.classList.remove("rolling");
         }
       }, 50);
     }
