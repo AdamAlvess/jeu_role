@@ -212,9 +212,14 @@
 
       const lineWidth = launcher.querySelector(".target-line").offsetWidth;
       const maxX = lineWidth - 14;
-      const peakHeight = 60 + (charge / 100) * 40;
-      const duration = 1000;
 
+      // Distance réelle selon charge
+      const targetX = (charge / 100) * maxX;
+
+      // Hauteur du tir en cloche selon charge
+      const peakHeight = 40 + (charge / 100) * 60;
+
+      const duration = 1000;
       ball.style.display = "block";
       ball.style.top = "0px";
       ball.style.left = "0px";
@@ -225,7 +230,7 @@
         const progress = timestamp - start;
         const t = Math.min(progress / duration, 1);
 
-        const x = t * maxX;
+        const x = t * targetX;
         const y = peakHeight * (1 - Math.pow(2 * t - 1, 2)); // parabole
 
         ball.style.left = `${x}px`;
