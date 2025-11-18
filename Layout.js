@@ -70,7 +70,7 @@ export default function Layout({ children, currentPageName }) {
       <footer className="bg-black/30 backdrop-blur-md border-t border-white/10 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-gray-400">
-            <p>© 2024 RPG Legends. Tous droits réservés.</p>
+            <p>© 2025 RPG Legends. Tous droits réservés.</p>
             <p className="text-sm mt-2">Plonge dans l'aventure et écris ta légende ⚔️</p>
           </div>
         </div>
